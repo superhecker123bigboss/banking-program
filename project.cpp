@@ -4,7 +4,6 @@
 class account{
     private:
     std::string password = "1";
-    std::string* passPTR;
     std::string name = "1";
     double totalBalance = 0;
     double* balancePTR = &totalBalance;
@@ -167,7 +166,6 @@ void withdraw(){
         
         std::string Withdrawchoice;
         double withdrawAmount;
-        *balancePTR;
 
         std::cout << "Enter the withdraw amount: " << std::endl;
         std::cin >> withdrawAmount;
@@ -200,7 +198,6 @@ void withdraw(){
 
 void deposit(){
     if(password != "1" && name != "1"){
-    *balancePTR;
     double depositAmount;
     std::string depositChoice;
 
