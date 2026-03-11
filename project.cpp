@@ -1,14 +1,13 @@
 #include <iostream>
 #include <cmath>
 
-void deposit(float& totalBalance);  
-void withdraw(float& totalBalance);
-void totalAmount(float& totalBalance);
-
 class account{
     private:
     std::string password = "1";
+    std::string* passPTR;
     std::string name = "1";
+    double totalBalance = 0;
+    double* balancePTR = &totalBalance;
 
     public:
     void setPassword(){
@@ -63,6 +62,7 @@ class account{
     }
     
     void changePassword(){ 
+        if(password != "1" && name != "1"){
         std::string checkPassword;
         std::string newPassword;
         std::string choice;
@@ -88,9 +88,14 @@ class account{
         } else{
                 std::cout << "invalid input, try again" << std::endl;
         }
-    }
+        } else{
+    std::cout << "You must make an account to have acces to this feature!" << std::endl;
+}
+}
+    
 
         void changeName(){
+        if(password != "1" && name != "1"){
         std::string checkPassword;
         std::string newName;
         std::string choice;
@@ -116,9 +121,13 @@ class account{
         } else{
                 std::cout << "invalid input, try again" << std::endl;
         }
-    }
+    } else{
+    std::cout << "You must make an account to have acces to this feature!" << std::endl;
+}
+}
 
     void getName(){
+        if(password != "1" && name != "1"){
         std::string checkPassword;
         std::string choice;
         std::cout << "do you want to view your name?" << std::endl;
@@ -140,17 +149,91 @@ class account{
         } else{
                 std::cout << "invalid input, try again" << std::endl;
         }
-    }
+    } else{
+    std::cout << "You must make an account to have acces to this feature!" << std::endl;
+}
+}
+    
+void totalAmount(){
+    if(password != "1" && name != "1"){
+    std::cout << "Your total balance is: " << *balancePTR << "$" << std::endl;}
+else {
+    std::cout << "You must make an account to have acces to this feature!" << std::endl;
+}
+}
+
+void withdraw(){
+        if(password != "1" && name != "1"){
+        
+        std::string Withdrawchoice;
+        double withdrawAmount;
+        *balancePTR;
+
+        std::cout << "Enter the withdraw amount: " << std::endl;
+        std::cin >> withdrawAmount;
+
+        std::cout << "Are you sure you want to withdraw: " << withdrawAmount << "$" << std::endl;
+        std::cout << "Awnser in yes or no" << std::endl;
+        std::cin >> Withdrawchoice;
+
+        if(Withdrawchoice == "YES" || Withdrawchoice == "Yes" || Withdrawchoice == "yes"){
+        if(withdrawAmount > *balancePTR){
+                    std::cout << "Unable to process transaction: Insufficient funds" << std::endl;
+        }
+        else{ 
+        
+                    std::cout << "withdraw succesfull" << std::endl;
+                    std::cout << "you withdrew: " << withdrawAmount << "$" << std::endl;
+                    *balancePTR -= withdrawAmount;
+        }
+        }
+        else if(Withdrawchoice == "NO" || Withdrawchoice == "No" || Withdrawchoice == "no"){
+            std::cout << "withdraw cancelled" << std::endl;
+        }
+        else{
+            std::cout << "Invalid user input: Awnser in a yes or no" << std::endl;
+        }
+} else{
+    std::cout << "You must make an account to have acces to this feature!" << std::endl;
+}
+}
+
+void deposit(){
+    if(password != "1" && name != "1"){
+    *balancePTR;
+    double depositAmount;
+    std::string depositChoice;
+
+    std::cout << "Enter the deposit amount: " << std::endl;
+    std::cin >> depositAmount;
+    
+    std::cout << "Are you sure you want to deposit: " << depositAmount << "$" << std::endl;
+    std::cout << "Awnser in yes or no" << std::endl;
+    std::cin >> depositChoice;
+
+    if(depositChoice == "YES" || depositChoice == "Yes" || depositChoice == "yes"){
+            std::cout << "deposit succesfull" << std::endl;
+            std::cout << "you deposited: " << depositAmount << "$" << std::endl;
+            *balancePTR += depositAmount;
+            
+        }
+        else if(depositChoice == "NO" || depositChoice == "No" || depositChoice == "no"){
+            std::cout << "Deposit cancelled" << std::endl;
+        }
+        else{
+            std::cout << "Invalid user input: Awnser in a yes or no" << std::endl;
+        }
+} else{
+    std::cout << "You must make an account to have acces to this feature!" << std::endl;
+}
+}
 
 };
 
 
 int main(){
     account myAcc;
-    
-    
     int choice;
-    float totalBalance = 0;
     
     std::cout << "welcome to the National online bank service of the Netherlands" << std::endl;
     
@@ -162,13 +245,13 @@ int main(){
 
     switch(choice){
         case 1: 
-            totalAmount(totalBalance);
+            myAcc.totalAmount();
             break;
         case 2: 
-            deposit(totalBalance);
+            myAcc.deposit();
             break;
         case 3:
-            withdraw(totalBalance);
+            myAcc.withdraw();
             break;
         case 4:
             myAcc.setPassword();
@@ -197,66 +280,4 @@ int main(){
 
  return 0;
 
-}
-
-void totalAmount(float& totalBalance){
-    std::cout << "Your total balance is: " << totalBalance << "$" << std::endl;
-    
-}
-
-void withdraw(float& totalBalance){
-    
-    std::string Withdrawchoice;
-    float withdrawAmount;
-
-
-        std::cout << "Enter the withdraw amount: " << std::endl;
-        std::cin >> withdrawAmount;
-
-        std::cout << "Are you sure you want to withdraw: " << withdrawAmount << "$" << std::endl;
-        std::cout << "Awnser in yes or no" << std::endl;
-        std::cin >> Withdrawchoice;
-
-        if(Withdrawchoice == "YES" || Withdrawchoice == "Yes" || Withdrawchoice == "yes"){
-        if(withdrawAmount > totalBalance){
-                    std::cout << "Unable to process transaction: Insufficient funds" << std::endl;
-        }
-        else{ 
-        
-                    std::cout << "withdraw succesfull" << std::endl;
-                    std::cout << "you withdrew: " << withdrawAmount << "$" << std::endl;
-                    totalBalance -= withdrawAmount;
-        }
-        }
-        else if(Withdrawchoice == "NO" || Withdrawchoice == "No" || Withdrawchoice == "no"){
-            std::cout << "withdraw cancelled" << std::endl;
-        }
-        else{
-            std::cout << "Invalid user input: Awnser in a yes or no" << std::endl;
-        }
-}
-
-void deposit(float& totalBalance){
-    float depositAmount;
-    std::string depositChoice;
-
-    std::cout << "Enter the deposit amount: " << std::endl;
-    std::cin >> depositAmount;
-    
-    std::cout << "Are you sure you want to deposit: " << depositAmount << "$" << std::endl;
-    std::cout << "Awnser in yes or no" << std::endl;
-    std::cin >> depositChoice;
-
-    if(depositChoice == "YES" || depositChoice == "Yes" || depositChoice == "yes"){
-            std::cout << "deposit succesfull" << std::endl;
-            std::cout << "you deposited: " << depositAmount << "$" << std::endl;
-            totalBalance += depositAmount;
-            
-        }
-        else if(depositChoice == "NO" || depositChoice == "No" || depositChoice == "no"){
-            std::cout << "Deposit cancelled" << std::endl;
-        }
-        else{
-            std::cout << "Invalid user input: Awnser in a yes or no" << std::endl;
-        }
 }
